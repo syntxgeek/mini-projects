@@ -1,0 +1,32 @@
+name: Automated 404 Link Checker
+
+on:
+  schedule:
+    # Runs at 3:00 AM every Monday
+    - cron: '0 3 * * 1'
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+jobs:
+  link-checker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Scan Website for Broken Links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Replace the URL below with your target website
+          args: --verbose --no-progress --exclude "mailto:.*" --exclude "tel:.*" "https://your-target-website.com/"
+          fail: true
+
+      - name: Send Slack Notification on Failure
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          # This pulls the secret from your GitHub Repository Secrets
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_TITLE: "Broken Links Detected"
+          SLACK_MESSAGE: "The automated link checker found 404s on the website. Check the GitHub Actions tab for details."
+          SLACK_COLOR: "#ff0000"
