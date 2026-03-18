@@ -18,7 +18,10 @@ jobs:
         uses: lycheeverse/lychee-action@v2
         with:
           # Replace the URL below with your target website
-          args: --verbose --no-progress --exclude "mailto:.*" --exclude "tel:.*" "https://your-target-website.com/"
+          # --accept 200: Standard success code (Required)
+          # --accept 403,429: Ignores security blocks from Social Media/Bots
+          # --exclude: Skips protocols that cannot be web-crawled
+          args: --verbose --no-progress --accept 200,403,429 --exclude "mailto:.*" --exclude "tel:.*" "https://your-target-website.com/"
           fail: true
 
       - name: Send Slack Notification on Failure
