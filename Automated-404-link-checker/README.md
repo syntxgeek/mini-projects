@@ -17,7 +17,16 @@ I engineered a custom **GitHub Actions** workflow that:
 * **Legacy Support:** Manually verified and documented legacy Amazon redirects that were triggering "false" 404s, ensuring the team only receives alerts for actual breakages.
 * **Real-time Alerts:** Integrated a secure **Slack Webhook** to notify the dev team instantly upon a failed scan.
 
+### 🛡️ Smart Filtering & Bot Handling
+One of the core challenges was handling "False 404s" from platforms like Instagram, LinkedIn, and YouTube that block automated crawlers. 
+
+* **Status Code Filtering:** Instead of ignoring these domains entirely (which would hide actual broken links), I configured the workflow to `accept 403, 429` status codes. 
+* **Result:** The system ignores security-based blocks but will still trigger an alert if a link returns a true `404 Not Found`.
+* **Manual Verification:** I implemented a process for identifying "Bot-only 404s" (where a link works for humans but fails for bots due to YouTube Studio 'Embedding' restrictions), providing actionable data for the media team.
+
+  
 ---
+
 
 ## 🛠️ Technical Stack
 * **Tool:** [Lychee](https://github.com/lycheeverse/lychee) (High-speed Rust-based link checker).
