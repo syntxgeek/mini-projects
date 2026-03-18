@@ -1,0 +1,19 @@
+# --- Social Media & Third-Party Platforms ---
+# These sites often block automated bots (403/429 errors).
+# Patterns use Regex to catch any sub-link within these domains.
+https://www.linkedin.com/.*
+https://www.facebook.com/.*
+https://x.com/.*
+https://www.instagram.com/.*
+https://www.youtube.com/.*
+https://jobs.gusto.com/.*
+https://dub.sh/.*
+
+# --- Specific Legacy Redirects ---
+# Example: Amazon Appstore deep-links that work for humans but return 404 to bots.
+https://www.amazon.com/gp/mas/dl/.*
+
+# --- Non-Web Protocols ---
+# These cannot be verified by a standard web crawler.
+mailto:.*
+tel:.*
